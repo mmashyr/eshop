@@ -17,7 +17,7 @@ public class Booking extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "booking_id")
-    private long id;
+    private Long id;
 
     @OneToMany(mappedBy = "booking")
     private List<SalePosition> salePositions = new ArrayList<>();

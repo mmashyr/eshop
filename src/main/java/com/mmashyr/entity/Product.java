@@ -14,7 +14,7 @@ public class Product extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
-    private long id;
+    private Long id;
 
     @Column(name = "name")
     private String name;

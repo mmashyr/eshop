@@ -12,7 +12,7 @@ public class SalePosition extends BasicEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sale_position_id")
-    private long id;
+    private Long id;
 
     @Column(name = "quantity_of_product")
     private int quantityOfProduct;
