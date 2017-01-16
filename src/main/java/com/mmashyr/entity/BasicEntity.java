@@ -9,20 +9,7 @@ import java.io.Serializable;
 @MappedSuperclass
 public class BasicEntity implements Serializable {
 
-    private Long id;
-
     public BasicEntity() {
     }
 
-    public BasicEntity(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

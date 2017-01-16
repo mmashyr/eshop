@@ -37,6 +37,14 @@ public class Booking extends BasicEntity {
     public Booking() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public List<SalePosition> getSalePositions() {
         return salePositions;
     }
