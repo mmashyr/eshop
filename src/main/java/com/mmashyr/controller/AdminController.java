@@ -41,7 +41,7 @@ public class AdminController {
         }
         productService.delete(id);
 
-        return "redirect:/product";
+        return "redirect:/admin/product";
     }
 
     @RequestMapping(value = "/product/add", method = RequestMethod.GET)
@@ -59,6 +59,6 @@ public class AdminController {
         }
         productService.save(product);
 
-        return "redirect:/product";
+        return "redirect:/admin/product";
     }
 }
