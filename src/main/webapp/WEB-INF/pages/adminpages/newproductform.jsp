@@ -11,7 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<c:url var="addProduct" value="/product/add"/>
+<c:url var="addProduct" value="/admin/product/add"/>
 <div class="container">
     <fieldset>
         <legend>Add new Product</legend>

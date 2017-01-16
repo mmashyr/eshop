@@ -34,7 +34,7 @@
                 <td><c:out value="${product.name}"/></td>
                 <td><c:out value="${product.price}"/></td>
                 <td>
-                    <c:url var="deleteProduct" value="/product/${product.id}"/>
+                    <c:url var="deleteProduct" value="/admin/product/${product.id}"/>
                     <a href="${deleteProduct}" class="btn btn-info" role="button">Link Button</a>
                 </td>
             </tr>
@@ -42,7 +42,7 @@
     </table>
 </div>
 
-<a href="<c:url value="/product/add"/>" class="btn btn-info" role="button">Add New Product</a>
+<a href="<c:url value="/admin/product/add"/>" class="btn btn-info" role="button">Add New Product</a>
 
 
 </body>
