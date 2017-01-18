@@ -31,11 +31,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category findOne(Long id) {
-        return null;
+        return categoryRepository.findOne(id);
     }
 
     @Override
     public List<Category> getAll() {
-        return null;
+        return (List<Category>) categoryRepository.findAll();
     }
 }

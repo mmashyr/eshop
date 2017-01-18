@@ -1,9 +1,11 @@
 package com.mmashyr.service.impl;
 
+import com.mmashyr.entity.Category;
 import com.mmashyr.entity.Product;
 import com.mmashyr.repository.ProductRepository;
 import com.mmashyr.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -38,4 +40,5 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getAll() {
         return (List<Product>) productRepository.findAll();
     }
+
 }

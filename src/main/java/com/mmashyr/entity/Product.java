@@ -2,6 +2,7 @@ package com.mmashyr.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,8 +23,11 @@ public class Product extends BasicEntity {
     @Column(name = "price")
     private BigDecimal price;
 
-    @ManyToMany(mappedBy = "products")
-    private List<Category> categories;
+    @ManyToMany(cascade = {CascadeType.MERGE})
+    @JoinTable(name = "product_category",
+            joinColumns = {@JoinColumn(name = "product_id")},
+            inverseJoinColumns = {@JoinColumn(name = "category_id")})
+    private List<Category> categories = new ArrayList<>();
 
     public Product() {
 

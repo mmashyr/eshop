@@ -2,11 +2,15 @@ package com.mmashyr.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import javax.servlet.Filter;
+
 
 /**
  * Created by Anton on 16.01.2017.
@@ -20,6 +24,12 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         resolver.setPrefix("/WEB-INF/pages/");
         resolver.setSuffix(".jsp");
         return resolver;
+    }
+
+    @Bean
+    public Filter hiddenHttpMethodFilter() {
+        HiddenHttpMethodFilter filter = new HiddenHttpMethodFilter();
+        return filter;
     }
 
     @Override

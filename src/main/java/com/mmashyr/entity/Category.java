@@ -1,6 +1,7 @@
 package com.mmashyr.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,11 +19,8 @@ public class Category extends BasicEntity {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "category_product",
-            joinColumns = {@JoinColumn(name = "category_id")},
-            inverseJoinColumns = {@JoinColumn(name = "product_id")})
-    private List<Product> products;
+    @ManyToMany(mappedBy = "categories", cascade = CascadeType.MERGE)
+    private List<Product> products = new ArrayList<>();
 
     public Category() {
     }
