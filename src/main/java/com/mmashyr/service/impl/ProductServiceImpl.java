@@ -6,6 +6,7 @@ import com.mmashyr.repository.ProductRepository;
 import com.mmashyr.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -41,4 +42,9 @@ public class ProductServiceImpl implements ProductService {
         return (List<Product>) productRepository.findAll();
     }
 
+
+    @Override
+    public List<Product> findDistinctByCategoryIds(List<Long> categories) {
+       return  productRepository.findDistinctByCategoryIds(categories);
+    }
 }

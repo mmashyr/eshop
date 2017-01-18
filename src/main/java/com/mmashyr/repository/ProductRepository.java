@@ -1,12 +1,19 @@
 package com.mmashyr.repository;
 
+import com.mmashyr.entity.Category;
 import com.mmashyr.entity.Product;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Created by Anton on 13.01.2017.
  */
 @Repository
 public interface ProductRepository extends PagingAndSortingRepository<Product, Long> {
+    @Query("SELECT DISTINCT p FROM Product p INNER JOIN p.categories c WHERE c.id IN (:categories)")
+    List<Product> findDistinctByCategoryIds(@Param("categories") List<Long> categories);
 }
