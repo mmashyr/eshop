@@ -14,34 +14,29 @@
     <jsp:include page="/WEB-INF/pages/adminpages/templates/topmenu.jsp"/>
 </head>
 <body>
-
 <div class="container">
     <div class="row">
-        <jsp:include page="/WEB-INF/pages/customerpages/templates/left-menu.jsp"/>
         <div class="col-sm-8">
-            <c:url var="logout" value="/logout"/>
-            <form:form action="${logout}" method="POST">
-                <input type="submit" class="btn btn-primary pull-right" value="Log out">
-            </form:form>
             <table class="table">
                 <thead>
                 <tr>
                     <td>Name</td>
+                    <td>Price</td>
+                    <td>Amount</td>
                 </tr>
                 </thead>
-                <c:forEach var="product" items="${productsToShow}">
+                <tbody>
+                <c:forEach var="booking" items="${bookings}">
                     <tr>
-                        <td>
-                            <c:url var="getProductInfo" value="product/${product.id}"/>
-                            <a href="${getProductInfo}" class="btn btn-info" role="button">${product.name}</a>
-                        </td>
+                        <td>${salePosition.key.name}</td>
+                        <td>${salePosition.key.price}</td>
+                        <td>${salePosition.value}</td>
                     </tr>
                 </c:forEach>
+                </tbody>
             </table>
         </div>
     </div>
 </div>
-
-
 </body>
 </html>

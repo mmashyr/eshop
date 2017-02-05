@@ -36,6 +36,10 @@
                 <td>Total: ${cart.totalPrice}</td>
                 </tbody>
             </table>
+            <c:url var="save" value="/cart/save"/>
+            <form:form action="${save}" method="POST">
+                <input type="submit" class="btn btn-primary pull-right" value="Check out">
+            </form:form>
         </div>
     </div>
 </div>

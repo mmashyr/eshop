@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -12,12 +13,12 @@
 <div class="col-sm-4">
     <div class="navbar navbar navbar-fixed-left">
         <c:url var="mainPage" value="/"/>
-        <form method="POST" action="${mainPage}">
+        <form:form method="POST" action="${mainPage}">
             <c:forEach var="category" items="${categories}">
             <input type="checkbox" name="categoryIDs" value="${category.id}">${category.name}<Br>
             </c:forEach>
             <input type="submit" value="Submit">
-        </form>
+        </form:form>
     </div>
 </div>
 </html>
