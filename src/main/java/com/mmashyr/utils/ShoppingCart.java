@@ -6,6 +6,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +16,7 @@ import java.util.Map;
  */
 @Component
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class ShoppingCart {
+public class ShoppingCart implements Serializable {
 
     private Map<Product, Integer> salePositions = new HashMap<>();
     private double totalPrice;
@@ -62,7 +63,7 @@ public class ShoppingCart {
 
     public void removeAll() {
         salePositions.clear();
-        this.countPrice();
+        this.totalPrice = 0;
     }
 }
 
