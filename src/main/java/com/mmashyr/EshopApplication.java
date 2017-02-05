@@ -9,6 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class EshopApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(new Class<?>[]{EshopApplication.class, JpaConfig.class, MvcConfiguration.class}, args);
+        SpringApplication.run(new Class<?>[]{EshopApplication.class, JpaConfig.class, MvcConfiguration.class, }, args);
     }
 }

@@ -1,5 +1,7 @@
 package com.mmashyr.entity;
 
+import com.mmashyr.entity.enums.UserRole;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,13 +10,19 @@ import java.util.List;
  * Created by Anton on 12.01.2017.
  */
 @Entity
-@Table(name = "customer")
-public class Customer extends BasicEntity {
+@Table(name = "account")
+public class Account extends BasicEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id")
+    @Column(name = "account_id")
     private Long id;
+
+    @Column(name = "username", unique = true)
+    private String username;
+
+    @Column(name = "password")
+    private String password;
 
     @Column(name = "first_name")
     private String firstName;
@@ -22,14 +30,17 @@ public class Customer extends BasicEntity {
     @Column(name = "second_name")
     private String secondName;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id")
+    @Embedded
     private Address address;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "account")
     private List<Booking> bookings = new ArrayList<>();
 
-    public Customer() {
+    @Column(name = "user_role")
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
+
+    public Account() {
     }
 
     public Long getId() {
@@ -70,5 +81,45 @@ public class Customer extends BasicEntity {
 
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    public boolean isEnabled() {
+        return true;
     }
 }

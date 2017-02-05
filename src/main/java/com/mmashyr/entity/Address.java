@@ -1,18 +1,14 @@
 package com.mmashyr.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
  * Created by Anton on 12.01.2017.
  */
-@Entity
-@Table(name = "address")
-public class Address extends BasicEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "address_id")
-    private Long id;
+@Embeddable
+public class Address extends BasicEntity {
 
     @Column(name = "city")
     private String city;

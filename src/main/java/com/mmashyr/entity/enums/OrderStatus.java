@@ -5,6 +5,7 @@ package com.mmashyr.entity.enums;
  */
 public enum OrderStatus {
 
+    NEW("NEW"),
     PACKAGED("PACKAGED"),
     DELIVERY("DELIVERY"),
     CLOSED("CLOSED"),

@@ -4,8 +4,8 @@ import com.mmashyr.entity.enums.DeliveryType;
 import com.mmashyr.entity.enums.OrderStatus;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Anton on 12.01.2017.
@@ -19,12 +19,16 @@ public class Booking extends BasicEntity {
     @Column(name = "booking_id")
     private Long id;
 
-    @OneToMany(mappedBy = "booking")
-    private List<SalePosition> salePositions = new ArrayList<>();
+//TODO add date and time here  and to the jsp as well
+    @ElementCollection
+    @CollectionTable(name = "product_in_booking")
+    @MapKeyJoinColumn(name = "product_id")
+    @Column(name = "quantity")
+    private Map<Product, Integer> productsInBooking = new HashMap<>();
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    @JoinColumn(name = "account_id")
+    private Account account;
 
     @Column(name = "booking_status")
     @Enumerated(EnumType.STRING)
@@ -45,20 +49,12 @@ public class Booking extends BasicEntity {
         this.id = id;
     }
 
-    public List<SalePosition> getSalePositions() {
-        return salePositions;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setSalePositions(List<SalePosition> salePositions) {
-        this.salePositions = salePositions;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public OrderStatus getOrderStatus() {
@@ -75,5 +71,13 @@ public class Booking extends BasicEntity {
 
     public void setDeliveryType(DeliveryType deliveryType) {
         this.deliveryType = deliveryType;
+    }
+
+    public Map<Product, Integer> getProductsInBooking() {
+        return productsInBooking;
+    }
+
+    public void setProductsInBooking(Map<Product, Integer> productsInBooking) {
+        this.productsInBooking = productsInBooking;
     }
 }
