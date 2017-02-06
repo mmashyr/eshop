@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="mytags" tagdir="/WEB-INF/tags" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -17,24 +18,31 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-8">
-            <table class="table">
-                <thead>
-                <tr>
-                    <td>Name</td>
-                    <td>Price</td>
-                    <td>Amount</td>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="booking" items="${bookings}">
+            <c:forEach var="booking" items="${bookings}">
+                <h3>Booking date: <mytags:localDateTime date="${booking.dateTime}" pattern="yyyy.MM.dd HH:mm"/></h3>
+                <table class="table table-bordered">
+                    <thead class="thead">
                     <tr>
-                        <td>${salePosition.key.name}</td>
-                        <td>${salePosition.key.price}</td>
-                        <td>${salePosition.value}</td>
+                        <th>Product name</th>
+                        <th>Amount</th>
+                        <th>Price</th>
                     </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="productsInBooking" items="${booking.productsInBooking}">
+                        <tr>
+                            <td>${productsInBooking.key.name}</td>
+                            <td>${productsInBooking.value}</td>
+                            <td>${productsInBooking.key.price}</td>
+                        </tr>
+                    </c:forEach>
+                    <tr>
+                        <td colspan="2">Total</td>
+                        <td align="right">${booking.totalPrice}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </c:forEach>
         </div>
     </div>
 </div>
