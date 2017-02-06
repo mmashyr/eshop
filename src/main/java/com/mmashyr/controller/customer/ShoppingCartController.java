@@ -65,6 +65,7 @@ public class ShoppingCartController {
         Booking booking = new Booking();
         booking.setOrderStatus(OrderStatus.NEW);
         booking.setProductsInBooking(shoppingCart.getSalePositions());
+        booking.setTotalPrice(shoppingCart.getTotalPrice());
         booking.setAccount(account);
 
         bookingRepository.save(booking);

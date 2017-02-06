@@ -4,6 +4,7 @@ import com.mmashyr.entity.enums.DeliveryType;
 import com.mmashyr.entity.enums.OrderStatus;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +30,12 @@ public class Booking extends BasicEntity {
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
+
+    @Column(name = "total_price")
+    private double totalPrice;
+
+    @Column(name = "booking_date")
+    private LocalDateTime dateTime = LocalDateTime.now();
 
     @Column(name = "booking_status")
     @Enumerated(EnumType.STRING)
@@ -79,5 +86,21 @@ public class Booking extends BasicEntity {
 
     public void setProductsInBooking(Map<Product, Integer> productsInBooking) {
         this.productsInBooking = productsInBooking;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }
