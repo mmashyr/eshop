@@ -17,7 +17,8 @@ import java.util.List;
 /**
  * Created by Anton on 27.01.2017.
  */
-@Controller(value = "/booking")
+@Controller
+@RequestMapping(value = "/booking")
 public class BookingController {
 
     private final static String CUSTOMER_PAGES = "customerpages/";
