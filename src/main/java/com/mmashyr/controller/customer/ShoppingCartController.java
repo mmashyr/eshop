@@ -4,8 +4,8 @@ import com.mmashyr.entity.Account;
 import com.mmashyr.entity.Booking;
 import com.mmashyr.entity.Product;
 import com.mmashyr.entity.enums.OrderStatus;
-import com.mmashyr.repository.AccountRepository;
-import com.mmashyr.repository.BookingRepository;
+import com.mmashyr.service.AccountService;
+import com.mmashyr.service.BookingService;
 import com.mmashyr.service.ProductService;
 import com.mmashyr.utils.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +25,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/cart")
 public class ShoppingCartController {
 
-    private final static String CART_PAGE = "customerpages/cart";
-    @Autowired
-    ShoppingCart shoppingCart;
-    @Autowired
-    AccountRepository accountRepository;
-    @Autowired
-    BookingRepository bookingRepository;
+    public final static String CART_PAGE = "customerpages/cart";
+
+    private BookingService bookingService;
+    private ShoppingCart shoppingCart;
+    private AccountService accountService;
     private ProductService productService;
+
+    @Autowired
+    public void setBookingService(BookingService bookingService) {
+        this.bookingService = bookingService;
+    }
+
+    @Autowired
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
+    }
+
+    @Autowired
+    public void setAccountService(AccountService accountService) {
+        this.accountService = accountService;
+    }
 
     @Autowired
     public void setProductService(ProductService productService) {
@@ -60,15 +73,15 @@ public class ShoppingCartController {
     public String saveAsBooking() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String customer = authentication.getName();
-        Account account = accountRepository.findAccountByUsername(customer);
+        Account account = accountService.findAccountByUsername(customer);
 
         Booking booking = new Booking();
         booking.setOrderStatus(OrderStatus.NEW);
         booking.setProductsInBooking(shoppingCart.getSalePositions());
         booking.setTotalPrice(shoppingCart.getTotalPrice());
-        booking.setAccount(account);
+        booking.getAccounts().add(account);
 
-        bookingRepository.save(booking);
+        bookingService.save(booking);
 
         shoppingCart.removeAll();
         return "redirect:/cart"; //TODO add flash attributes about successful purchase

@@ -2,8 +2,8 @@ package com.mmashyr.controller.customer;
 
 import com.mmashyr.entity.Account;
 import com.mmashyr.entity.Booking;
-import com.mmashyr.repository.AccountRepository;
-import com.mmashyr.repository.BookingRepository;
+import com.mmashyr.service.AccountService;
+import com.mmashyr.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,27 +21,26 @@ import java.util.List;
 @RequestMapping(value = "/booking")
 public class BookingController {
 
-    private final static String CUSTOMER_PAGES = "customerpages/";
+    public final static String CUSTOMER_PAGES = "customerpages/";
+
+    AccountService accountService;
+    BookingService bookingService;
 
     @Autowired
-    AccountRepository accountRepository;
-
-    @Autowired
-    BookingRepository bookingRepository;
-
-    public void setAccountRepository(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
+    public void setBookingService(BookingService bookingService) {
+        this.bookingService = bookingService;
     }
 
-    public void setBookingRepository(BookingRepository bookingRepository) {
-        this.bookingRepository = bookingRepository;
+    @Autowired
+    public void setAccountService(AccountService accountService) {
+        this.accountService = accountService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public String showAllBookings(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String customer = authentication.getName();
-        Account account = accountRepository.findAccountByUsername(customer);
+        Account account = accountService.findAccountByUsername(customer);
 
         List<Booking> bookings = account.getBookings();
         model.addAttribute("bookings", bookings);
