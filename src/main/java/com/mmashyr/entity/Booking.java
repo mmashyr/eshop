@@ -5,7 +5,9 @@ import com.mmashyr.entity.enums.OrderStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,16 +22,17 @@ public class Booking extends BasicEntity {
     @Column(name = "booking_id")
     private Long id;
 
-//TODO add date and time here  and to the jsp as well
     @ElementCollection
     @CollectionTable(name = "product_in_booking")
     @MapKeyJoinColumn(name = "product_id")
     @Column(name = "quantity")
     private Map<Product, Integer> productsInBooking = new HashMap<>();
 
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
+    @ManyToMany(cascade = {CascadeType.MERGE})
+    @JoinTable(name = "account_booking",
+            joinColumns = {@JoinColumn(name = "account_id")},
+            inverseJoinColumns = {@JoinColumn(name = "booking_id")})
+    private List<Account> accounts = new ArrayList<>();
 
     @Column(name = "total_price")
     private double totalPrice;
@@ -56,12 +59,12 @@ public class Booking extends BasicEntity {
         this.id = id;
     }
 
-    public Account getAccount() {
-        return account;
+    public List<Account> getAccounts() {
+        return accounts;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setAccounts(Account account) {
+        this.accounts = accounts;
     }
 
     public OrderStatus getOrderStatus() {

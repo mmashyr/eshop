@@ -33,7 +33,7 @@ public class Account extends BasicEntity {
     @Embedded
     private Address address;
 
-    @OneToMany(mappedBy = "account")
+    @ManyToMany(mappedBy = "accounts")
     private List<Booking> bookings = new ArrayList<>();
 
     @Column(name = "user_role")
