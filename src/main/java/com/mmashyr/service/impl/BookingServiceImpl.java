@@ -1,6 +1,7 @@
 package com.mmashyr.service.impl;
 
 import com.mmashyr.entity.Booking;
+import com.mmashyr.entity.enums.OrderStatus;
 import com.mmashyr.repository.BookingRepository;
 import com.mmashyr.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,15 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<Booking> getAll() {
         return (List<Booking>) bookingRepository.findAll();
+    }
+
+    @Override
+    public List<Booking> findByOrderStatus(OrderStatus orderStatus) {
+        return bookingRepository.findByOrderStatus(orderStatus);
+    }
+
+    @Override
+    public List<Booking> findByOrderStatusAndAccountId(OrderStatus orderStatus, Long id) {
+        return bookingRepository.findByOrderStatusAndAccounts_Id(orderStatus, id);
     }
 }

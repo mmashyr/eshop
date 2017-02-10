@@ -1,6 +1,8 @@
 package com.mmashyr.service.impl;
 
 import com.mmashyr.entity.Account;
+import com.mmashyr.entity.enums.OrderStatus;
+import com.mmashyr.entity.enums.UserRole;
 import com.mmashyr.repository.AccountRepository;
 import com.mmashyr.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +49,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account findAccountByUsername(String username) {
         return accountRepository.findAccountByUsername(username);
+    }
+
+    @Override
+    public List<Account> findCustomerHavingBookingsWithOrderStatus(OrderStatus orderStatus) {
+        return accountRepository.findAccountsByBookings_orderStatusAndUserRole(orderStatus, UserRole.ROLE_CUSTOMER);
     }
 }
