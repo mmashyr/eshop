@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <jsp:include page="/WEB-INF/pages/adminpages/templates/topmenu.jsp"/>
 </head>
 <body>
 <div class="container">
@@ -26,11 +25,18 @@
                 </tr>
                 </thead>
                 <tbody>
+                <c:url var="removeImage" value="/resources/img/remove_product.png"/>
                 <c:forEach var="salePosition" items="${cart.salePositions}">
                     <tr>
                         <td>${salePosition.key.name}</td>
                         <td>${salePosition.key.price}</td>
                         <td>${salePosition.value}</td>
+                        <td>
+                            <c:url var="remove" value="/cart/remove/${salePosition.key.id}/"/>
+                            <form:form action="${remove}" method="DELETE">
+                                <input type="image" src="${removeImage}">
+                            </form:form>
+                        </td>
                     </tr>
                 </c:forEach>
                 <td>Total: ${cart.totalPrice}</td>
