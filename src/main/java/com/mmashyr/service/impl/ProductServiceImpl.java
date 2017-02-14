@@ -47,4 +47,9 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findDistinctByCategoryIds(List<Long> categories) {
        return  productRepository.findDistinctByCategoryIds(categories);
     }
+
+    @Override
+    public List<Product> findDistinctByCategoryNames(List<String> categories) {
+        return productRepository.findDistinctByCategoryNames(categories);
+    }
 }

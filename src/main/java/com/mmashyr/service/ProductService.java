@@ -12,4 +12,6 @@ import java.util.List;
 public interface ProductService extends CRUDService<Product> {
 
     List<Product> findDistinctByCategoryIds(List<Long> categories);
+
+    List<Product> findDistinctByCategoryNames(List<String> categories);
 }

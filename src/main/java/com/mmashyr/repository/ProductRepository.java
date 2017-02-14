@@ -16,4 +16,7 @@ import java.util.List;
 public interface ProductRepository extends PagingAndSortingRepository<Product, Long> {
     @Query("SELECT DISTINCT p FROM Product p INNER JOIN p.categories c WHERE c.id IN (:categories)")
     List<Product> findDistinctByCategoryIds(@Param("categories") List<Long> categories);
+
+    @Query("SELECT DISTINCT p FROM Product p INNER JOIN p.categories c WHERE c.name IN (:categories)")
+    List<Product> findDistinctByCategoryNames(@Param("categories") List<String> categories);
 }
