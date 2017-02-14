@@ -23,6 +23,9 @@ public class Product extends BasicEntity {
     @Column(name = "price")
     private BigDecimal price;
 
+    @Column(name = "image_url")
+    private String imageURL;
+
     @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(name = "product_category",
             joinColumns = {@JoinColumn(name = "product_id")},
@@ -55,6 +58,14 @@ public class Product extends BasicEntity {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public List<Category> getCategories() {

@@ -29,6 +29,11 @@
                     <form:input path="price" class="form-control"/>
                     <form:errors path="price" cssClass="error"/><br>
                 </div>
+                <div class="form-group">
+                    <label for="imageURL">image URL: </label>
+                    <form:input path="imageURL" class="form-control"/>
+                    <form:errors path="imageURL" cssClass="error"/><br>
+                </div>
                 <input type="submit" class="btn pull-right" value="Submit"/>
             </fieldset>
             </form:form>
