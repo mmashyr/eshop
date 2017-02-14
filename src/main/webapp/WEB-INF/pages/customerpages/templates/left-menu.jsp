@@ -10,12 +10,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<div class="col-sm-4">
-    <div class="navbar navbar navbar-fixed-left">
+<div class="col-md-2">
+    <div class="navbar-fixed-left">
+        <h3>Select a producer:</h3>
         <c:url var="mainPage" value="/"/>
-        <form:form method="POST" action="${mainPage}">
+        <form:form method="GET" action="${mainPage}">
             <c:forEach var="category" items="${categories}">
-            <input type="checkbox" name="categoryIDs" value="${category.id}">${category.name}<Br>
+                <input type="checkbox" name="producer" value="${category.name}">${category.name}<Br>
             </c:forEach>
             <input type="submit" value="Submit">
         </form:form>

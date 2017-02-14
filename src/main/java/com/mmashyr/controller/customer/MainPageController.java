@@ -44,13 +44,13 @@ public class MainPageController {
     }
 
     @RequestMapping("/")
-    public String populateProductsByChosenCategories(Model model, @RequestParam(required = false) List<Long> categoryIDs) {
+    public String populateProductsByChosenCategories(Model model, @RequestParam(required = false) List<String> producer) {
         List<Product> productsToShow;
 
-        if (categoryIDs == null || categoryIDs.isEmpty()) {
+        if (producer == null || producer.isEmpty()) {
             productsToShow = productService.getAll();
         } else {
-            productsToShow = productService.findDistinctByCategoryIds(categoryIDs);
+            productsToShow = productService.findDistinctByCategoryNames(producer);
         }
         model.addAttribute("productsToShow", productsToShow);
         return CUSTOMER_PAGES + "main";
