@@ -63,6 +63,28 @@ public class ProductController {
         return "redirect:/admin/product";
     }
 
+    @RequestMapping(value = "/product/{id}/edit", method = RequestMethod.GET)
+    public String showEditProductForm(@PathVariable("id") long id, Model model) {
+        Product product = productService.findOne(id);
+        if (product == null) {
+            return "redirect:/admin/product";
+        }
+        model.addAttribute("product", product);
+
+        return  PRODUCT_PAGES + "editproductform";
+    }
+
+    @RequestMapping(value = "/product/{id}/edit", method = RequestMethod.POST)
+    public String editProduct(@PathVariable Long id, @ModelAttribute("product") Product product) {
+        Product oldProduct = productService.findOne(id);
+        oldProduct.setName(product.getName());
+        oldProduct.setPrice(product.getPrice());
+        oldProduct.setImageURL(product.getImageURL());
+        productService.save(oldProduct);
+
+        return "redirect:/admin/product/" + id;
+    }
+
     @RequestMapping(value = "/product/add", method = RequestMethod.GET)
     public String showNewProductForm(Model model) {
         Product product = new Product();

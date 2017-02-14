@@ -27,8 +27,11 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <td>Name</td>
-                    <td>Price</td>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Info</th>
+                    <th>Edit</th>
+                    <th>Delite</th>
                 </tr>
                 </thead>
 
@@ -39,6 +42,10 @@
                         <td>
                             <c:url var="getProductInfo" value="/admin/product/${product.id}"/>
                             <a href="${getProductInfo}" class="btn btn-info" role="button">Get Full Information</a>
+                        </td>
+                        <td>
+                            <c:url var="editProduct" value="/admin/product/${product.id}/edit"/>
+                            <a href="${editProduct}" class="btn btn-info" role="button">Edit</a>
                         </td>
                         <td>
                                 <c:url var="deleteProduct" value="/admin/product/${product.id}"/>
