@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar target/dependency/eshop-0.0.1-SNAPSHOT.jar
+web: java $JAVA_OPTS -jar target/eshop-0.0.1-SNAPSHOT.jar
