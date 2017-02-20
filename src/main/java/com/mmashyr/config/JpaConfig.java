@@ -26,7 +26,7 @@ public class JpaConfig implements TransactionManagementConfigurer {
 
     @Value("${jdbc.driverClassName}")
     private String driver;
-    @Value("${database.url}")
+    @Value("${jdbc.database.url}")
     private String url;
     @Value("${jdbc.username}")
     private String username;
