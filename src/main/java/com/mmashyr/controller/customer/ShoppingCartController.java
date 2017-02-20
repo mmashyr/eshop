@@ -3,6 +3,7 @@ package com.mmashyr.controller.customer;
 import com.mmashyr.entity.Account;
 import com.mmashyr.entity.Booking;
 import com.mmashyr.entity.Product;
+import com.mmashyr.entity.enums.DeliveryType;
 import com.mmashyr.entity.enums.OrderStatus;
 import com.mmashyr.service.AccountService;
 import com.mmashyr.service.BookingService;
@@ -57,7 +58,8 @@ public class ShoppingCartController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String showShoppingCart() {
+    public String showShoppingCart(Model model) {
+        model.addAttribute("deliveryTypes", DeliveryType.values());
         return CART_PAGE;
     }
 
@@ -69,7 +71,10 @@ public class ShoppingCartController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addToShoppingCart(@RequestParam("productId") Long productId, @RequestParam("amount") String amount) {
+    public String addToShoppingCart(@RequestParam("productId") Long productId, @RequestParam("amount") String amount, Model model) {
+        if(Integer.parseInt(amount) < 1){
+            return "redirect:/product/" + productId;
+        }
         Product product = productService.findOne(productId);
         shoppingCart.addProduct(product, Integer.parseInt(amount));
         return "redirect:/cart";
@@ -77,7 +82,16 @@ public class ShoppingCartController {
 
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAsBooking() {
+    public String saveAsBooking(@RequestParam String deliveryType) {
+        if(shoppingCart.getSalePositions().size() == 0){
+            return "redirect:/cart";
+        }
+        DeliveryType deliveryTypeEnum = DeliveryType.COURIER;
+        try {
+            deliveryTypeEnum = DeliveryType.valueOf(deliveryType.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            //TODO do smth with the exception
+        }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String customer = authentication.getName();
         Account account = accountService.findAccountByUsername(customer);
@@ -86,6 +100,7 @@ public class ShoppingCartController {
         booking.setOrderStatus(OrderStatus.NEW);
         booking.setProductsInBooking(shoppingCart.getSalePositions());
         booking.setTotalPrice(shoppingCart.getTotalPrice());
+        booking.setDeliveryType(deliveryTypeEnum);
         booking.getAccounts().add(account);
 
         bookingService.save(booking);

@@ -19,42 +19,43 @@
             <fieldset>
                 <legend>Create new account</legend>
                 <form:form modelAttribute="account" method="POST" action="${register}">
+                <c:if test="${param.error != null}">
+                    <p>Invalid username and password.</p>
+                </c:if>
+                <c:if test="${param.logout != null}">
+                    <p>You have been logged out successfully.</p>
+                </c:if>
                 <div class="form-group">
-                    <label for="username"> Username: </label>
+                    <label for="username"> Username: </label> <form:errors path="username" cssClass="error"/>
                     <form:input path="username" class="form-control"/>
-                    <form:errors path="username" cssClass="error"/>
 
-                    <label for="password">Password: </label>
-                    <form:password path="password" class="form-control"/>
-                    <form:errors path="password" cssClass="error"/>
+                    <label for="passwordDto">Password: </label> <form:errors path="passwordDto" cssClass="error"/>
+                    <form:password path="passwordDto" class="form-control"/>
 
-                    <label for="firstName">First name: </label>
-                    <form:password path="firstName" class="form-control"/>
-                    <form:errors path="firstName" cssClass="error"/>
+                    <label for="firstName">First name: </label> <form:errors path="firstName" cssClass="error"/>
+                    <form:input path="firstName" class="form-control"/>
 
-                    <label for="secondName">Second name: </label>
-                    <form:password path="secondName" class="form-control"/>
-                    <form:errors path="secondName" cssClass="error"/>
+                    <label for="secondName">Second name: </label> <form:errors path="secondName" cssClass="error"/>
+                    <form:input path="secondName" class="form-control"/>
 
-                    <label for="address.city">City: </label>
-                    <form:password path="address.city" class="form-control"/>
-                    <form:errors path="address.city" cssClass="error"/>
+                    <label for="address.city">City: </label> <form:errors path="address.city" cssClass="error"/>
+                    <form:input path="address.city" class="form-control"/>
 
-                    <label for="address.street">Street: </label>
-                    <form:password path="address.street" class="form-control"/>
-                    <form:errors path="address.street" cssClass="error"/>
+                    <label for="address.street">Street: </label> <form:errors path="address.street" cssClass="error"/>
+                    <form:input path="address.street" class="form-control"/>
 
-                    <label for="address.houseNumber">House number: </label>
-                    <form:password path="address.houseNumber" class="form-control"/>
-                    <form:errors path="address.houseNumber" cssClass="error"/>
+                    <label for="address.houseNumber">House number: </label> <form:errors path="address.houseNumber"
+                                                                                         cssClass="error"/>
+                    <form:input path="address.houseNumber" class="form-control"/>
 
-                    <label for="address.apartmentNumber">Apartment number:</label>
-                    <form:password path="address.apartmentNumber" class="form-control"/>
-                    <form:errors path="address.apartmentNumber" cssClass="error"/>
+                    <label for="address.apartmentNumber">Apartment number:</label> <form:errors
+                        path="address.apartmentNumber" cssClass="error"/>
+                    <form:input path="address.apartmentNumber" class="form-control"/>
 
-                    <label for="address.phoneNumber">Phone number:</label>
-                    <form:password path="address.phoneNumber" class="form-control"/>
-                    <form:errors path="address.phoneNumber" cssClass="error"/>
+                    <label for="address.phoneNumber">Phone number:</label> <form:errors path="address.phoneNumber"
+                                                                                        cssClass="error"/>
+                    <form:input path="address.phoneNumber" class="form-control"/>
+
                 </div>
                 <input type="submit" class="btn pull-right" value="Register"/>
             </fieldset>

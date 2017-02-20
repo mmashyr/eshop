@@ -80,7 +80,11 @@ public class MainPageController {
 
     @RequestMapping(value = "/product/{productId}")
     public String showProduct(Model model, @PathVariable Long productId) {
-        model.addAttribute("product", productService.findOne(productId));
+        Product product = productService.findOne(productId);
+        if(product == null){
+            return "redirect:/";
+        }
+        model.addAttribute("product", product);
         return CUSTOMER_PAGES + "product";
     }
 }

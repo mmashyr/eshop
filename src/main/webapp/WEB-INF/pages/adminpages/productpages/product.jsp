@@ -7,23 +7,26 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <jsp:include page="/WEB-INF/pages/adminpages/templates/topmenu.jsp"/>
 </head>
-<body>
+<body class="general-body">
 <div class="container">
     <div class="row">
         <div class="col-sm-8">
             <h2>Name: ${product.name}</h2>
             <h2>Price: ${product.price}</h2>
-            <table class="table">
+            <table class="table table-bordered">
                 <thead>
                 <tr>
                     <td>Category Name</td>
+                    <td>Remove</td>
                 </tr>
                 </thead>
                 <tbody>
+                <c:url var="removeImage" value="/resources/img/remove_product.png"/>
                 <c:forEach var="category" items="${product.categories}">
                     <tr>
                         <c:url var="infoAboutCategoty" value="admin/category/${category.id}/"/>
@@ -32,7 +35,7 @@
                             <c:url var="removeCategory"
                                    value="/admin/product/${product.id}/category/${category.id}"/>
                             <form:form action="${removeCategory}" method="DELETE">
-                                <input type="submit" class="btn pull-right" value="Remove Category">
+                                <input type="image" src="${removeImage}">
                             </form:form>
                         </td>
                     </tr>

@@ -10,20 +10,26 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <jsp:include page="/WEB-INF/pages/adminpages/templates/topmenu.jsp"/>
 </head>
-<body>
+<body class="general-body">
 <c:url var="linkToProduct" value="/product/"/>
 <div class="container">
     <div class="row">
         <div class="col-sm-8">
             <c:forEach var="entry" items="${accountAndBookings}">
                 <h1>${entry.key.firstName}</h1>
+                <h4>City: ${entry.key.address.city}</h4>
+                <h4>House number: ${entry.key.address.houseNumber}</h4>
+                <h4>Apartment number: ${entry.key.address.apartmentNumber}</h4>
+                <h4>Phone number: ${entry.key.address.phoneNumber}</h4>
                 <c:forEach var="booking" items="${entry.value}">
-                    <h3>Booking date: <mytags:localDateTime date="${booking.dateTime}" pattern="yyyy.MM.dd HH:mm"/></h3>
+                    <h3>Booking date: <mytags:localDateTime date="${booking.dateTime}" pattern="yyyy.MM.dd HH:mm"/></h3> Address
                     <h4>Status: ${booking.orderStatus} </h4>
+                    <h4>Delivery type: ${booking.deliveryType}</h4>
+
                     <table class="table table-bordered">
                         <thead class="thead">
                         <tr>
