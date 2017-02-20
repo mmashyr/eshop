@@ -3,6 +3,9 @@ package com.mmashyr.entity;
 import com.mmashyr.entity.enums.UserRole;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,18 +22,30 @@ public class Account extends BasicEntity {
     private Long id;
 
     @Column(name = "username", unique = true)
+    @NotNull
+    @Size(min = 4, max = 12)
     private String username;
 
     @Column(name = "password")
     private String password;
 
+    @Transient
+    @NotNull
+    @Size(min = 6, max = 16)
+    private String passwordDto;
+
     @Column(name = "first_name")
+    @NotNull
+    @Size(min = 2, max = 16)
     private String firstName;
 
     @Column(name = "second_name")
+    @NotNull
+    @Size(min = 2, max = 16)
     private String secondName;
 
     @Embedded
+    @Valid
     private Address address;
 
     @ManyToMany(mappedBy = "accounts")
@@ -105,6 +120,14 @@ public class Account extends BasicEntity {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPasswordDto() {
+        return passwordDto;
+    }
+
+    public void setPasswordDto(String passwordDto) {
+        this.passwordDto = passwordDto;
     }
 
     public boolean isAccountNonExpired() {

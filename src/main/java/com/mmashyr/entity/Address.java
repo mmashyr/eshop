@@ -2,6 +2,9 @@ package com.mmashyr.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Created by Anton on 12.01.2017.
@@ -11,18 +14,27 @@ import javax.persistence.Embeddable;
 public class Address extends BasicEntity {
 
     @Column(name = "city")
+    @NotNull
+    @Size(min = 3, max = 20, message = "City must be between {min} and {max}")
     private String city;
 
     @Column(name = "street")
+    @NotNull
+    @Size(min = 3, max = 30, message = "Street must be between {min} and {max}")
     private String street;
 
     @Column(name = "house_number")
+    @NotNull
+    @Digits(integer = 3, fraction = 0)
     private int houseNumber;
 
     @Column(name = "apartment_number")
+    @NotNull
+    @Digits(integer = 3, fraction = 0)
     private int apartmentNumber;
 
     @Column(name = "phone_number")
+    @NotNull
     private String phoneNumber;
 
     public Address() {

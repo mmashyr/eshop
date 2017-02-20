@@ -1,6 +1,7 @@
 package com.mmashyr.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +19,18 @@ public class Product extends BasicEntity {
     private Long id;
 
     @Column(name = "name")
+    @NotNull
+    @Size(min = 5, max = 35, message = "Name must be between {min} and {max}")
     private String name;
 
     @Column(name = "price")
+    @NotNull
+    @DecimalMin("0.00")
+    @DecimalMax("100000.00")
     private BigDecimal price;
 
     @Column(name = "image_url")
+    @NotNull
     private String imageURL;
 
     @ManyToMany(cascade = {CascadeType.MERGE})

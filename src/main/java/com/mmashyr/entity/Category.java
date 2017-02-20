@@ -1,6 +1,8 @@
 package com.mmashyr.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,8 @@ public class Category extends BasicEntity {
     private Long id;
 
     @Column(name = "name")
+    @NotNull
+    @Size(min = 5, max = 20, message = "Name must be between {min} and {max}")
     private String name;
 
     @ManyToMany(mappedBy = "categories", cascade = CascadeType.MERGE)
