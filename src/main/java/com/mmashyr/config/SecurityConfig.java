@@ -32,12 +32,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                     .authorizeRequests()
                     .antMatchers("/registration").permitAll()
+                    .antMatchers("/resources").permitAll()
+                    .antMatchers("/courier/**").hasAnyRole("COURIER", "ADMIN")
+                    .antMatchers("/admin/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
                     .loginPage("/login").permitAll()
                     .usernameParameter("username").passwordParameter("password")
-                    .successForwardUrl("/")
+                    .defaultSuccessUrl("/")
                 .and()
                     .csrf()
                 .and();
