@@ -12,8 +12,15 @@
 </head>
 <div class="col-md-2">
     <div class="navbar-fixed-left">
+        <h3>Search:</h3>
+        <c:url var="search" value="/search/page/1/"/>
+        <form:form method="GET" action="${search}">
+            <input type="text" name="name"/>
+            <input type="submit" value="Submit">
+        </form:form>
+        <br><strong>Or</strong><br>
         <h3>Select a producer:</h3>
-        <c:url var="mainPage" value="/"/>
+        <c:url var="mainPage" value="/page/1"/>
         <form:form method="GET" action="${mainPage}">
             <c:forEach var="category" items="${categories}">
                 <input type="checkbox" name="producer" value="${category.name}">${category.name}<Br>

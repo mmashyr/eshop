@@ -5,6 +5,8 @@ import com.mmashyr.entity.Product;
 import com.mmashyr.repository.ProductRepository;
 import com.mmashyr.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
@@ -49,7 +51,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findDistinctByCategoryNames(List<String> categories) {
-        return productRepository.findDistinctByCategoryNames(categories);
+    public Page<Product> findDistinctByCategoryNames(List<String> categories, Pageable pageable) {
+        return productRepository.findDistinctByCategoryNames(categories, pageable);
+    }
+
+    @Override
+    public Page<Product> findByName(String name, Pageable pageable) {
+        return productRepository.findByNameContainingIgnoreCase(name, pageable);
+    }
+
+    @Override
+    public Page<Product> findAll(Pageable pageable) {
+        return productRepository.findAll(pageable);
     }
 }

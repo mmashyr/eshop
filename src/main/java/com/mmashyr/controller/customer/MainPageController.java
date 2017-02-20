@@ -5,6 +5,8 @@ import com.mmashyr.entity.Product;
 import com.mmashyr.service.CategoryService;
 import com.mmashyr.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -44,15 +46,35 @@ public class MainPageController {
     }
 
     @RequestMapping("/")
-    public String populateProductsByChosenCategories(Model model, @RequestParam(required = false) List<String> producer) {
-        List<Product> productsToShow;
+    public String redirectToMainPage() {
+        return "redirect:/page/1";
+    }
 
+    @RequestMapping("/page/{pageNumber}")
+    public String populateProductsByChosenCategories(@PathVariable int pageNumber, Model model, @RequestParam(required = false) List<String> producer, @RequestParam(required = false) String name) {
+        Page<Product> productsToShow;
         if (producer == null || producer.isEmpty()) {
-            productsToShow = productService.getAll();
+            productsToShow = productService.findAll(new PageRequest(pageNumber - 1, 3));
+            model.addAttribute("productsToShow", productsToShow);
         } else {
-            productsToShow = productService.findDistinctByCategoryNames(producer);
+            productsToShow = productService.findDistinctByCategoryNames(producer, new PageRequest(pageNumber - 1, 3));
+            model.addAttribute("productsToShow", productsToShow);
         }
-        model.addAttribute("productsToShow", productsToShow);
+        model.addAttribute("numberOfPages", productsToShow.getTotalPages());
+
+        return CUSTOMER_PAGES + "main";
+    }
+
+    @RequestMapping(value = "search/page/{pageNumber}/")
+    public String searchProductsByName(@PathVariable int pageNumber, Model model, @RequestParam String name) {
+        Page<Product> productsToShow;
+        if (name != null || !name.isEmpty()) {
+            productsToShow = productService.findByName(name, new PageRequest(pageNumber - 1, 3));
+            model.addAttribute("productsToShow", productsToShow);
+        } else return "redirect:/";
+        model.addAttribute("fromSearch", true);
+        model.addAttribute("searchName", name);
+        model.addAttribute("numberOfPages", productsToShow.getTotalPages());
         return CUSTOMER_PAGES + "main";
     }
 
