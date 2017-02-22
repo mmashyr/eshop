@@ -49,13 +49,18 @@ public class DeliveryController {
         model.addAttribute("couriersAccount", couriersAccount);
     }
 
-    @RequestMapping(value = {"/booking/", "/booking/{orderStatus}"}, method = RequestMethod.GET)
+    @RequestMapping(value = "/booking")
+    public String handleAccessToBookingsWithoutOrderStatus() {
+        return "redirect:/courier/booking/new/";
+    }
+
+    @RequestMapping(value = "/booking/{orderStatus}", method = RequestMethod.GET)
     public String getBookingsByOrderStatus(Model model, @ModelAttribute("couriersAccount") Account couriersAccount, @PathVariable("orderStatus") String orderStatus) {
         OrderStatus orderStatusEnum = OrderStatus.NEW;
         try {
             orderStatusEnum = OrderStatus.valueOf(orderStatus.toUpperCase());
         } catch (IllegalArgumentException e) {
-            //TODO do smth with the exception
+            return "redirect:/courier/booking/new/";
         }
         List<Account> accounts = accountService.findCustomerHavingBookingsWithOrderStatus(orderStatusEnum);
         Map<Account, List<Booking>> accountAndBookings = new HashMap<>();

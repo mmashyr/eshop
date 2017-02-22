@@ -23,7 +23,7 @@ public class Account extends BasicEntity {
 
     @Column(name = "username", unique = true)
     @NotNull
-    @Size(min = 4, max = 12)
+    @Size(min = 4, max = 12, message = "Must be between {min} and {max}")
     private String username;
 
     @Column(name = "password")
@@ -31,17 +31,17 @@ public class Account extends BasicEntity {
 
     @Transient
     @NotNull
-    @Size(min = 6, max = 16)
+    @Size(min = 6, max = 16, message = "Password must be between {min} and {max}")
     private String passwordDto;
 
     @Column(name = "first_name")
     @NotNull
-    @Size(min = 2, max = 16)
+    @Size(min = 2, max = 16 , message = "First name must be between {min} and {max}")
     private String firstName;
 
     @Column(name = "second_name")
     @NotNull
-    @Size(min = 2, max = 16)
+    @Size(min = 2, max = 16, message = "Second name must be between {min} and {max}")
     private String secondName;
 
     @Embedded

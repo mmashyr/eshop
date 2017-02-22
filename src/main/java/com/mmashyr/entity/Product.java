@@ -90,16 +90,14 @@ public class Product extends BasicEntity {
 
         Product product = (Product) o;
 
-        if (!id.equals(product.id)) return false;
-        if (!name.equals(product.name)) return false;
-        return price.equals(product.price);
+        if (id != null ? !id.equals(product.id) : product.id != null) return false;
+        return name != null ? name.equals(product.name) : product.name == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + price.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
 }
