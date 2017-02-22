@@ -20,7 +20,7 @@ public class Category extends BasicEntity {
 
     @Column(name = "name")
     @NotNull
-    @Size(min = 5, max = 20, message = "Name must be between {min} and {max}")
+    @Size(min = 2, max = 20, message = "Name must be between {min} and {max}")
     private String name;
 
     @ManyToMany(mappedBy = "categories", cascade = CascadeType.MERGE)
