@@ -9,10 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -86,5 +83,19 @@ public class MainPageController {
         }
         model.addAttribute("product", product);
         return CUSTOMER_PAGES + "product";
+    }
+    @RequestMapping(value = "/testjson")
+    public String showProduct(Model model){
+        model.addAttribute("numberOfPages", productService.findAll(new PageRequest(1,3)).getTotalPages());
+        return CUSTOMER_PAGES + "mainAjax";
+    }
+
+    @RequestMapping(value = "/getajax")
+    public @ResponseBody List<Product> getAjax(@RequestParam(value="pageNumber", required=false, defaultValue="1") int pageNumber) {
+        Page<Product> productsToShow;
+
+        productsToShow = productService.findAll(new PageRequest(pageNumber - 1, 3));
+
+        return productsToShow.getContent();
     }
 }

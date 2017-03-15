@@ -1,5 +1,7 @@
 package com.mmashyr.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
@@ -37,6 +39,7 @@ public class Product extends BasicEntity {
     @JoinTable(name = "product_category",
             joinColumns = {@JoinColumn(name = "product_id")},
             inverseJoinColumns = {@JoinColumn(name = "category_id")})
+    @JsonIgnore
     private List<Category> categories = new ArrayList<>();
 
     public Product() {
