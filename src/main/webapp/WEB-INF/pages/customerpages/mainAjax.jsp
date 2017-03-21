@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="<c:url value="/resources/js/mainpage.js"/>"></script>
+    <script src="<c:url value="/resources/js/mainpage/productdiv.js"/>"></script>
     <jsp:include page="/WEB-INF/pages/customerpages/templates/topmenu.jsp"/>
 </head>
 <body class="general-body">
@@ -23,28 +23,13 @@
             <form:form action="${logout}" method="POST">
                 <input type="submit" class="btn btn-primary pull-right" value="Log out">
             </form:form>
-            <jsp:include page="/WEB-INF/pages/customerpages/templates/left-menu.jsp"/>
+            <jsp:include page="/WEB-INF/pages/customerpages/templates/left-menu-ajax.jsp"/>
             <div class="col-md-10" id="products">
             </div>
         </div>
     </div>
-    <c:choose>
-        <c:when test="${fromSearch}">
-            <ul class="pagination pagination-lg">
-                <c:forEach begin="1" var="current" end="${numberOfPages}">
-                    <c:url var="toPage" value="/search//page/${current}/?${pageContext.request.queryString}"/>
-                    <li><a href="${toPage}">${current}</a></li>
-                </c:forEach>
+            <ul id = "pagination" class="pagination pagination-lg">
             </ul>
-        </c:when>
-        <c:otherwise>
-            <ul class="pagination pagination-lg">
-                <c:forEach begin="1" var="current" end="${numberOfPages}">
-                    <button type="button" class="btn btn-info" onclick="loadpage(this, ${current})">${current}</button>
-                </c:forEach>
-            </ul>
-        </c:otherwise>
-    </c:choose>
 </div>
 </body>
 </html>

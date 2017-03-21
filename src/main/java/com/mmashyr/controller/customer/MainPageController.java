@@ -7,6 +7,8 @@ import com.mmashyr.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +31,6 @@ public class MainPageController {
         this.productService = productService;
     }
 
-
     @Autowired
     public void setCategoryService(CategoryService categoryService) {
         this.categoryService = categoryService;
@@ -42,60 +43,74 @@ public class MainPageController {
         model.addAttribute("product", new Product());
     }
 
-    @RequestMapping("/")
-    public String redirectToMainPage() {
-        return "redirect:/page/1";
-    }
-
-    @RequestMapping("/page/{pageNumber}")
-    public String populateProductsByChosenCategories(@PathVariable int pageNumber, Model model, @RequestParam(required = false) List<String> producer, @RequestParam(required = false) String name) {
-        Page<Product> productsToShow;
-        if (producer == null || producer.isEmpty()) {
-            productsToShow = productService.findAll(new PageRequest(pageNumber - 1, 3));
-            model.addAttribute("productsToShow", productsToShow);
-        } else {
-            productsToShow = productService.findDistinctByCategoryNames(producer, new PageRequest(pageNumber - 1, 3));
-            model.addAttribute("productsToShow", productsToShow);
-        }
-        model.addAttribute("numberOfPages", productsToShow.getTotalPages());
-
-        return CUSTOMER_PAGES + "main";
-    }
-
-    @RequestMapping(value = "search/page/{pageNumber}/")
-    public String searchProductsByName(@PathVariable int pageNumber, Model model, @RequestParam String name) {
-        Page<Product> productsToShow;
-        if (name != null || !name.isEmpty()) {
-            productsToShow = productService.findByName(name, new PageRequest(pageNumber - 1, 3));
-            model.addAttribute("productsToShow", productsToShow);
-        } else return "redirect:/";
-        model.addAttribute("fromSearch", true);
-        model.addAttribute("searchName", name);
-        model.addAttribute("numberOfPages", productsToShow.getTotalPages());
-        return CUSTOMER_PAGES + "main";
+    @RequestMapping(value = "/")
+    public String showProduct(Model model) {
+        model.addAttribute("numberOfPages", productService.findAll(new PageRequest(1, 3)).getTotalPages());
+        return CUSTOMER_PAGES + "mainAjax";
     }
 
     @RequestMapping(value = "/product/{productId}")
     public String showProduct(Model model, @PathVariable Long productId) {
         Product product = productService.findOne(productId);
-        if(product == null){
+        if (product == null) {
             return "redirect:/";
         }
         model.addAttribute("product", product);
         return CUSTOMER_PAGES + "product";
     }
-    @RequestMapping(value = "/testjson")
-    public String showProduct(Model model){
-        model.addAttribute("numberOfPages", productService.findAll(new PageRequest(1,3)).getTotalPages());
-        return CUSTOMER_PAGES + "mainAjax";
+
+    @RequestMapping(value = "/numberofresultsbysearch", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    ResponseEntity<Integer> getNumberOfResultsFromSearch(@RequestParam String name) {
+        Integer numberOfResults = 0;
+        if (name != null && !name.isEmpty()) {
+            numberOfResults = productService.findByName(name, new PageRequest(1, 3)).getTotalPages();
+        }
+        if (numberOfResults == 0) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(numberOfResults, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/getajax")
-    public @ResponseBody List<Product> getAjax(@RequestParam(value="pageNumber", required=false, defaultValue="1") int pageNumber) {
+    @RequestMapping(value = "/numberofresultsbycategories", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    ResponseEntity<Integer> getNumberOfResultsByCategories(@RequestParam(value = "producer[]", required = false) List<String> producer) {
+        Integer numberOfResults = 0;
+        if (producer != null && !producer.isEmpty()) {
+            numberOfResults = productService.findDistinctByCategoryNames(producer, new PageRequest(1, 3)).getTotalPages();
+        }
+        if (numberOfResults == 0) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(numberOfResults, HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value = "/searchajax", method = RequestMethod.POST)
+    public ResponseEntity<List<Product>> getAjaxFromSearch(@RequestParam String name, @RequestParam(value = "pageNumber", required = false, defaultValue = "1") int pageNumber) {
         Page<Product> productsToShow;
+        if (name != null && !name.isEmpty()) {
+            productsToShow = productService.findByName(name, new PageRequest(pageNumber - 1, 3));
+            return new ResponseEntity<>(productsToShow.getContent(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
-        productsToShow = productService.findAll(new PageRequest(pageNumber - 1, 3));
+    @RequestMapping("/bycategories")
+    public ResponseEntity<List<Product>> byCategoriesAjax(@RequestParam(required = false, defaultValue = "1") Integer pageNumber, @RequestParam(value = "producer[]", required = false) List<String> producer) {
+        Page<Product> productsToShow;
+        if (producer == null || producer.isEmpty()) {
+            productsToShow = productService.findAll(new PageRequest(pageNumber - 1, 3));
+            return new ResponseEntity<>(productsToShow.getContent(), HttpStatus.OK);
+        }
+        productsToShow = productService.findDistinctByCategoryNames(producer, new PageRequest(pageNumber - 1, 3));
+        if (productsToShow == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(productsToShow.getContent(), HttpStatus.OK);
 
-        return productsToShow.getContent();
+
     }
 }

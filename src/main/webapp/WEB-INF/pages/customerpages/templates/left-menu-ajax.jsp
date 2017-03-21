@@ -9,21 +9,23 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="<c:url value="/resources/js/mainpage/searchajax.js"/>"></script>
+    <script src="<c:url value="/resources/js/mainpage/checkboxesajax.js"/>"></script>
 </head>
 <div class="col-md-2">
     <div class="navbar-fixed-left">
         <h3>Search:</h3>
-        <c:url var="search" value="/search/page/1/"/>
-        <form:form method="GET" action="${search}">
-            <input type="text" name="name"/>
-            <input type="submit" value="Submit">
+        <c:url var="search" value="/searchajax"/>
+        <form:form id="searchform" method="POST" action="${search}">
+            <input type="text" name="name" id="searchName"/>
+            <input type="submit" value="Search">
         </form:form>
         <br><strong>Or</strong><br>
         <h3>Select a producer:</h3>
-        <c:url var="mainPage" value="/page/1"/>
-        <form:form method="GET" action="${mainPage}">
+        <c:url var="byCategories" value="/bycategories"/>
+        <form:form id="categorycheckboxes" method="POST" action="${byCategories}">
             <c:forEach var="category" items="${categories}">
-                <input type="checkbox" name="producer" value="${category.name}">${category.name}<Br>
+                <input type="checkbox" name="producer" class="producer" value="${category.name}">${category.name}<Br>
             </c:forEach>
             <input type="submit" value="Submit">
         </form:form>
