@@ -2,6 +2,15 @@
  * Created by Mark on 15.03.2017.
  */
 $(document).ready(function () {
+    populateProductsDiv();
+    $('.showAllButton').on('click', function(event) {
+        populateProductsDiv();
+        $('#categorycheckboxes').find('input[type=checkbox]:checked').prop('checked', false);
+        event.preventDefault();
+    });
+});
+
+function populateProductsDiv(){
     var token = $("input[name='_csrf']").val();
     var header = "X-CSRF-TOKEN";
     $(document).ajaxSend(function (e, xhr) {
@@ -21,7 +30,9 @@ $(document).ready(function () {
             }
         }
     });
-});
+}
+
+
 
 function drawPaginationMain(numberOfPages) {
     $("#pagination").empty();
