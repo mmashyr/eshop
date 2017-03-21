@@ -49,6 +49,23 @@ public class MainPageController {
         return CUSTOMER_PAGES + "mainAjax";
     }
 
+    @RequestMapping(value = "/maximumpages", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    ResponseEntity<Integer> getMaximumNumberOfPages() {
+        Integer numberOfResults = productService.findAll(new PageRequest(0, 3)).getTotalPages();
+        return new ResponseEntity<>(numberOfResults, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/allproducts", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    ResponseEntity<List<Product>> getPage(@RequestParam Integer pageNumber) {
+        Page<Product> productsToShow;
+        productsToShow = productService.findAll(new PageRequest(pageNumber - 1, 3));
+        return new ResponseEntity<>(productsToShow.getContent(), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/product/{productId}")
     public String showProduct(Model model, @PathVariable Long productId) {
         Product product = productService.findOne(productId);
