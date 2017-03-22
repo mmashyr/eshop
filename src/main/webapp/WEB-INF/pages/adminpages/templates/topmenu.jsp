@@ -11,8 +11,7 @@
 </head>
 <c:url var="product" value="/admin/product/"/>
 <c:url var="category" value="/admin/category/"/>
-<c:url var="order" value="/admin/order/"/>
-<c:url var="employee" value="/admin/employee/"/>
+<c:url var="home" value="/"/>
 <body>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -20,11 +19,9 @@
             <a class="navbar-brand">eShop admin panel</a>
         </div>
         <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="${home}">Home</a></li>
             <li><a href="${product}">Products</a></li>
             <li><a href="${category}">Categories</a></li>
-            <li><a href="${order}">Orders</a></li>
-            <li><a href="${employee}">Employees</a></li>
         </ul>
     </div>
 </nav>

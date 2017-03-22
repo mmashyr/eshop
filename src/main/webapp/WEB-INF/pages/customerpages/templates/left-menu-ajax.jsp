@@ -29,7 +29,7 @@
             </c:forEach>
             <input type="submit" value="Submit">
         </form:form>
-        <a class="btn btn-info showAllButton" role="button">Show All</a>
+        <a class="btn btn-info showAllButton" role="button">Reset</a>
     </div>
 </div>
 </html>
