@@ -17,8 +17,8 @@ function populateProductsDiv(){
         xhr.setRequestHeader(header, token);
     });
     $.ajax({
-        url: "maximumpages",
-        type: "POST",
+        url: "service/product/maximumpages",
+
         dataType: 'json',
         statusCode: {
             204: function () {
@@ -56,9 +56,9 @@ function drawPaginationButtonMain(pageNumber) {
 }
 
 function initializePage(pageNumber) {
+    var url = "service/product/page/" + pageNumber;
     $.ajax({
-        url: "allproducts",
-        type: "POST",
+        url: url,
         data: {
             pageNumber: pageNumber
         },

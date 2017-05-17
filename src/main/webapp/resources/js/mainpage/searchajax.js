@@ -3,7 +3,7 @@ $(document).ready(function () {
     frm.submit(function (e) {
         $('#categorycheckboxes').find('input[type=checkbox]:checked').prop('checked', false);
         $.ajax({
-            url: "numberofresultsbysearch",
+            url: "service/product/search/result/",
             type: frm.attr('method'),
             data: frm.serialize(),
             dataType: 'json',
@@ -21,12 +21,12 @@ $(document).ready(function () {
 });
 
 function searchAjax(name, pageNumber) {
+    var url = "service/product/search/result/page/" + pageNumber;
     $.ajax({
-        url: "searchajax",
-        type: "POST",
+        url: url,
+        type: "GET",
         data: {
-            "name": name,
-            "pageNumber": pageNumber
+            "name": name
         },
         dataType: 'json',
         success: function (data) {

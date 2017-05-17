@@ -19,5 +19,5 @@ public interface ProductService extends CRUDService<Product> {
 
     Page<Product> findByName(String name, Pageable pageable);
 
-    Page<Product> findAll(Pageable pageable);
+    Page<Product> findAllByPage(Pageable pageable);
 }

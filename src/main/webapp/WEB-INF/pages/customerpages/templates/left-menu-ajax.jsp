@@ -16,14 +16,14 @@
     <div class="navbar-fixed-left">
         <h3>Search:</h3>
         <c:url var="search" value="/searchajax"/>
-        <form:form id="searchform" method="POST" action="${search}">
+        <form:form id="searchform" method="GET" action="${search}">
             <input type="text" name="name" id="searchName"/>
             <input type="submit" value="Search">
         </form:form>
         <br><strong>Or</strong><br>
         <h3>Select a producer:</h3>
         <c:url var="byCategories" value="/bycategories"/>
-        <form:form id="categorycheckboxes" method="POST" action="${byCategories}">
+        <form:form id="categorycheckboxes" method="GET" action="${byCategories}">
             <c:forEach var="category" items="${categories}">
                 <input type="checkbox" name="producer" class="producer" value="${category.name}">${category.name}<Br>
             </c:forEach>

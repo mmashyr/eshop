@@ -1,4 +1,4 @@
-package com.mmashyr.controller.customer.service.service;
+package com.mmashyr.controller.customer.service;
 
 import com.mmashyr.entity.Product;
 import com.mmashyr.service.ProductService;
@@ -28,7 +28,7 @@ public class ServiceProductController {
 
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> products = productService.findAll();
+        List<Product> products = productService.getAll();
         if (products == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

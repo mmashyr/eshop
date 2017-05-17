@@ -16,13 +16,12 @@ $(document).ready(function () {
             selected.push($(this).val());
         });
         $.ajax({
-            url: "numberofresultsbycategories",
+            url: "service/product/categories/result",
             type: frm.attr('method'),
             data: {"producer": selected},
             dataType: 'json',
             statusCode: {
                 204: function () {
-
                     noresults();
                 },
                 200: function (numberOfPages) {
@@ -57,12 +56,12 @@ function drawPaginationButtonCategories(selectedCategories, pageNumber) {
 }
 
 function searchAjaxCategories(selectedCategories, pageNumber) {
+    var url = "service/product/categories/result/page/" + pageNumber;
     $.ajax({
-        url: "bycategories",
-        type: "POST",
+        url: url,
+        type: "GET",
         data: {
-            producer: selectedCategories,
-            pageNumber: pageNumber
+            producer: selectedCategories
         },
         dataType: 'json',
         success: function (data) {

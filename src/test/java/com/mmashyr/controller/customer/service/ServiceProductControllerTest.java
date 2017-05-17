@@ -1,6 +1,5 @@
 package com.mmashyr.controller.customer.service;
 
-import com.mmashyr.controller.customer.service.service.ServiceProductController;
 import com.mmashyr.entity.Product;
 import com.mmashyr.service.ProductService;
 import org.junit.Before;
@@ -64,7 +63,7 @@ public class ServiceProductControllerTest {
         List<Product> products = Arrays.asList(
                 product1,
                 product2);
-        when(productService.findAll()).thenReturn(products);
+        when(productService.getAll()).thenReturn(products);
         mockMvc.perform(get("/service/product/"))
                 .andExpect(status().is(302))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
@@ -78,18 +77,18 @@ public class ServiceProductControllerTest {
                 .andExpect(jsonPath("$[1].price", is(2)))
                 .andExpect(jsonPath("$[1].imageURL", is("image2URL")));
 
-        verify(productService, times(1)).findAll();
+        verify(productService, times(1)).getAll();
         verifyNoMoreInteractions(productService);
     }
 
     @Test
     public void whenNoProductsRetrieved_then204NoContent() throws Exception {
 
-        when(productService.findAll()).thenReturn(null);
+        when(productService.getAll()).thenReturn(null);
         mockMvc.perform(get("/service/product/"))
                 .andExpect(status().is(204));
 
-        verify(productService, times(1)).findAll();
+        verify(productService, times(1)).getAll();
         verifyNoMoreInteractions(productService);
     }
 
